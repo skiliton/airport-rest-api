@@ -1,22 +1,24 @@
 package com.repeta.airport.employee;
 
-import lombok.Getter;
-import lombok.Setter;
-
+import com.repeta.airport.user.User;
+import lombok.Data;
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.Calendar;
 
 @Entity
 @Table(name = "employee")
-@Getter
-@Setter
+@Data
 public class Employee {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    private int brigade;
+    @JoinColumn
+    @ManyToOne
+    @JoinColumn(name = "brigade", foreignKey = @ForeignKey(name = "employee_brigade_id_fk"))
+    private Brigade brigade;
 
     @ManyToOne
     @JoinColumn(name = "supervisor_id",foreignKey = @ForeignKey(name = "staff_staff_id_fk"))
@@ -28,17 +30,18 @@ public class Employee {
 
     private String surname;
 
-    @Column(name = "date_of_birth")
-    private Calendar dateOfBirth;
+    private LocalDateTime dateOfBirth;
 
     private char gender;
 
     private int kids;
 
-    @Column(name = "sal_hour")
     private double salHour;
 
-    @Column(name = "employed_since")
     private Calendar employedSince;
+    
+    @OneToOne()
+    @JoinColumn(name = "user_id", foreignKey = @ForeignKey(name = "employee_user_id_fk"))
+    private User user;
 
 }
