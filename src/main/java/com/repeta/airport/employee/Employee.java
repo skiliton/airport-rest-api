@@ -15,7 +15,6 @@ public class Employee {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @JoinColumn
     @ManyToOne
     @JoinColumn(name = "brigade", foreignKey = @ForeignKey(name = "employee_brigade_id_fk"))
     private Brigade brigade;

@@ -11,6 +11,11 @@ import java.util.Collection;
 @RepositoryRestResource(collectionResourceRel = "employees")
 public interface EmployeeRepository extends PagingAndSortingRepository<Employee,Integer> {
 
+    final public String SERVICES_DEPT = "services";
+    final public String TECHNICIANS_DEPT = "technicians";
+    final public String PILOTS_DEPT = "pilots";
+
+
     @Query(
             nativeQuery = true,
             value = "SELECT *  FROM employee WHERE supervisor_id IS NULL"
@@ -65,7 +70,7 @@ public interface EmployeeRepository extends PagingAndSortingRepository<Employee,
 
     @Query(
             nativeQuery = true,
-            value = "SELECT * FROM employee WHERE brigade IN (SELECT brigade FROM employee GROUP BY brigade HAVING AVG(sal_hour) BETWEEN :sal1 AND :sal2);"
+            value = "SELECT * FROM employee WHERE brigade IN (SELECT brigade FROM employee GROUP BY brigade HAVING AVG(sal_hour) BETWEEN :salHour1 AND :salHour2);"
     )
     Collection<Employee> findAllByAvgBrigadeSalHourBetween(@Param("salHour1") double salHour1, @Param("salHour2") double salHour2);
 
@@ -77,7 +82,7 @@ public interface EmployeeRepository extends PagingAndSortingRepository<Employee,
 
     @Query(
             nativeQuery = true,
-            value = "SELECT * FROM employee WHERE department='pilots' AND brigade IS NOT NULL"
+            value = "SELECT * FROM employee WHERE department='" + PILOTS_DEPT + "' AND brigade IS NOT NULL"
     )
     Collection<Employee> findAllPilots();
 
@@ -103,19 +108,19 @@ public interface EmployeeRepository extends PagingAndSortingRepository<Employee,
 
     @Query(
             nativeQuery = true,
-            value = "SELECT * FROM employee WHERE department='pilots' AND brigade IS NOT NULL AND gender=:gender"
+            value = "SELECT * FROM employee WHERE department='" + PILOTS_DEPT + "' AND brigade IS NOT NULL AND gender=:gender"
     )
     Collection<Employee> findAllPilotsByGender(@Param("gender") char gender);
 
     @Query(
             nativeQuery = true,
-            value = "SELECT * FROM employee WHERE department='pilots' AND brigade IS NOT NULL AND YEAR(FROM_DAYS(DATEDIFF(CURDATE(), employee.date_of_birth)))=:age"
+            value = "SELECT * FROM employee WHERE department='" + PILOTS_DEPT + "' AND brigade IS NOT NULL AND YEAR(FROM_DAYS(DATEDIFF(CURDATE(), employee.date_of_birth)))=:age"
     )
     Collection<Employee> findAllPilotsByAge(@Param("age") int age);
 
     @Query(
             nativeQuery = true,
-            value = "SELECT * FROM employee WHERE department='pilots' AND brigade IS NOT NULL AND sal_hour BETWEEN :salHour1 AND :salHour2"
+            value = "SELECT * FROM employee WHERE department='" + PILOTS_DEPT + "' AND brigade IS NOT NULL AND sal_hour BETWEEN :salHour1 AND :salHour2"
     )
     Collection<Employee> findAllPilotsBySalHourBetween(@Param("salHour1") double salHour1, @Param("salHour2") double salHour2);
 
