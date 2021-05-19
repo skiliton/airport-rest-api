@@ -248,7 +248,7 @@ public interface FlightRepository extends PagingAndSortingRepository<Flight,Inte
                     "                         FROM ticket " +
                     "                                  INNER JOIN ticket_log " +
                     "                         WHERE flight_id = f.id " +
-                    "                           AND state <> 'REFUNDED')) BETWEEN :emptSeats1 AND :emptSeats1;"
+                    "                           AND state <> 'REFUNDED')) BETWEEN :emptSeats1 AND :emptSeats2;"
     )
     Collection<Flight> findAllCancelledFlightsByEmptySeats(@Param("emptSeats1") int emptSeats1, @Param("emptSeats2") int emptSeats2);
 
@@ -277,7 +277,7 @@ public interface FlightRepository extends PagingAndSortingRepository<Flight,Inte
             nativeQuery = true,
             value = "SELECT * " +
                     "FROM flight " +
-                    "WHERE ROUND(TIME_TO_SEC(TIMEDIFF(takeoff, landing)) / 60) BETWEEN :time1 AND :time2;"
+                    "WHERE ROUND(TIME_TO_SEC(TIMEDIFF(takeoff, landing)) / 60) BETWEEN :minutes1 AND :minutes2;"
     )
     Collection<Flight> findAllFlightsByDuration(@Param("minutes1") int minutes1, @Param("minutes2") int minutes2);
 

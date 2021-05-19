@@ -1,6 +1,5 @@
 package com.repeta.airport.employee;
 
-import jdk.vm.ci.meta.Local;
 import lombok.Data;
 
 import javax.persistence.*;

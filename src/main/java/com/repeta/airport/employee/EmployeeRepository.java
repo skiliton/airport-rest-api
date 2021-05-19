@@ -1,24 +1,31 @@
 package com.repeta.airport.employee;
 
 
+import lombok.Data;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.PagingAndSortingRepository;
+import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
+import org.springframework.data.rest.core.config.Projection;
 
 import java.util.Collection;
+import java.util.List;
 
 @RepositoryRestResource(collectionResourceRel = "employees")
-public interface EmployeeRepository extends PagingAndSortingRepository<Employee,Integer> {
+public interface EmployeeRepository extends CrudRepository<Employee,Integer> {
 
     final public String SERVICES_DEPT = "services";
     final public String TECHNICIANS_DEPT = "technicians";
     final public String PILOTS_DEPT = "pilots";
 
 
+/*    @Query(nativeQuery = true, value = "SELECT name, surname FROM employee LIMIT 2")
+    Object[][] test();*/
+
     @Query(
             nativeQuery = true,
-            value = "SELECT *  FROM employee WHERE supervisor_id IS NULL"
+            value = "SELECT * FROM employee WHERE supervisor_id IS NULL"
     )
     Collection<Employee> findAllSupervisors();
 
@@ -64,9 +71,11 @@ public interface EmployeeRepository extends PagingAndSortingRepository<Employee,
 
     @Query(
             nativeQuery = true,
-            value = "SELECT * FROM employee WHERE YEAR(FROM_DAYS(DATEDIFF(CURDATE(), employee.date_of_birth)))=:age"
+            value = "SELECT * FROM employee WHERE YEAR(FROM_DAYS(DATEDIFF(CURDATE(), employee.date_of_birth))) BETWEEN :age1 AND :age2"
     )
-    Collection<Employee> findAllByAge(@Param("age") int age);
+    Collection<Employee> findAllByAge(@Param("age1") int age1, @Param("age2") int age2);
+
+
 
     @Query(
             nativeQuery = true,
