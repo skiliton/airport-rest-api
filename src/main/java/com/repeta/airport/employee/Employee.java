@@ -3,6 +3,7 @@ package com.repeta.airport.employee;
 import com.repeta.airport.user.User;
 import lombok.Data;
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Calendar;
 
@@ -29,7 +30,7 @@ public class Employee {
 
     private String surname;
 
-    private LocalDateTime dateOfBirth;
+    private LocalDate dateOfBirth;
 
     private char gender;
 
@@ -37,7 +38,7 @@ public class Employee {
 
     private double salHour;
 
-    private Calendar employedSince;
+    private LocalDate employedSince;
     
     @OneToOne()
     @JoinColumn(name = "user_id", foreignKey = @ForeignKey(name = "employee_user_id_fk"))

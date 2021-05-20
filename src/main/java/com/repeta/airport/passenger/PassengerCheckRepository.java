@@ -3,6 +3,6 @@ package com.repeta.airport.passenger;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 
-@RepositoryRestResource(collectionResourceRel = "passenger_check", path = "passenger_check")
+@RepositoryRestResource(collectionResourceRel = "passengerChecks")
 public interface PassengerCheckRepository extends PagingAndSortingRepository<PassengerCheck,Integer> {
 }

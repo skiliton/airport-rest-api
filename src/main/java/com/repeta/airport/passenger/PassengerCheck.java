@@ -1,5 +1,6 @@
 package com.repeta.airport.passenger;
 
+import com.repeta.airport.flight.Flight;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -16,6 +17,10 @@ public class PassengerCheck {
     @ManyToOne
     @JoinColumn(name = "passenger_id", foreignKey = @ForeignKey(name = "passenger_check_passenger_id_fk"))
     private Passenger passenger;
+
+    @ManyToOne
+    @JoinColumn(name = "flight_id", foreignKey = @ForeignKey(name = "passenger_check_flight_id_fk"))
+    private Flight flight;
 
     private String checkName;
 

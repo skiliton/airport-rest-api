@@ -51,7 +51,7 @@ public interface EmployeeRepository extends CrudRepository<Employee,Integer> {
             nativeQuery = true,
             value = "SELECT * FROM employee WHERE sal_hour BETWEEN :salHour1 AND :salHour2"
     )
-    Collection<Employee> findAllBySalHourIsBetween(@Param("salHour1") double salHour1, @Param("salHour2") double salHour2);
+    Collection<Employee> findAllBySalHourBetween(@Param("salHour1") double salHour1, @Param("salHour2") double salHour2);
 
     @Query(
             nativeQuery = true,
@@ -62,7 +62,7 @@ public interface EmployeeRepository extends CrudRepository<Employee,Integer> {
     @Query(
             nativeQuery = true,
             value = "SELECT *" +
-                    "FROM employee" +
+                    "FROM employee " +
                     "WHERE brigade IN (SELECT b.id" +
                     "                  FROM brigade b INNER JOIN flight f ON  b.plane_id=f.plane_id" +
                     "                  WHERE f.id=:flightId)"
@@ -73,7 +73,7 @@ public interface EmployeeRepository extends CrudRepository<Employee,Integer> {
             nativeQuery = true,
             value = "SELECT * FROM employee WHERE YEAR(FROM_DAYS(DATEDIFF(CURDATE(), employee.date_of_birth))) BETWEEN :age1 AND :age2"
     )
-    Collection<Employee> findAllByAge(@Param("age1") int age1, @Param("age2") int age2);
+    Collection<Employee> findAllByAgeBetween(@Param("age1") int age1, @Param("age2") int age2);
 
 
 
@@ -109,8 +109,8 @@ public interface EmployeeRepository extends CrudRepository<Employee,Integer> {
                     "   kids," +
                     "   sal_hour," +
                     "   employed_since," +
-                    "   user_id" +
-                    "FROM employee e INNER JOIN medical_inspection m ON e.id = m.pilot_id" +
+                    "   user_id " +
+                    "FROM employee e INNER JOIN medical_inspection m ON e.id = m.pilot_id " +
                     "WHERE m.passed=:passed AND YEAR(m.inspection_date)=:year"
     )
     Collection<Employee> findAllPilotsThatCompletedMedicalInspection(@Param("year") int year, @Param("passed") boolean passed);

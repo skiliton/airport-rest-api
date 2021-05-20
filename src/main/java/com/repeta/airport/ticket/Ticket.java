@@ -23,6 +23,8 @@ public class Ticket {
     @JoinColumn(name = "flight_id", foreignKey = @ForeignKey(name = "ticket_flight_id_fk"))
     private Flight flight;
 
+    private int seat;
+
     @ManyToOne
     @JoinColumn(name = "status", foreignKey = @ForeignKey(name = "ticket_ticket_log_id_fk"))
     private TicketLog status;
